@@ -43,7 +43,7 @@ Ce workflow permet de :
 
 1. Ouvre ton interface n8n
 2. Clique sur **"Workflows" > "Import from File"**
-3. Sélectionne le fichier `auto-push-chatbot.json`
+3. Sélectionne le fichier `Github_Push.json`
 4. Clique sur **"Import"**
 5. Tu peux maintenant visualiser et modifier le workflow
 
@@ -55,7 +55,7 @@ Ce workflow permet de :
 - Va sur [https://github.com/settings/tokens](https://github.com/settings/tokens)
 - Génére un token avec le scope `repo`
 - Dans le nœud `HTTP Request`, ajoute ce token dans les headers :
-Authorization: Bearer ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXX
+  Authorization: Bearer ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 ### Bot Telegram
 - Crée un bot via **BotFather**
