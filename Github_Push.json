@@ -1,0 +1,195 @@
+{
+  "name": "Github Push",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        -120
+      ],
+      "id": "04b60af1-404f-4461-b2b3-2d45c6e15576",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileSelector": "C:\\\\Users\\\\Chayma Ouerghi\\\\Desktop\\\\Chatbot\\\\chatbot.py",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -440,
+        -220
+      ],
+      "id": "0c413366-1b80-4b9d-aa6c-4d91a2da8144",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -280
+      ],
+      "id": "bdec00c5-ceed-4aae-8f4b-63aacbe0de86",
+      "name": "Extract from File",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "Ouerghi23",
+          "mode": "list",
+          "cachedResultName": "Ouerghi23",
+          "cachedResultUrl": "https://github.com/Ouerghi23"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "chatbot",
+          "mode": "list",
+          "cachedResultName": "chatbot",
+          "cachedResultUrl": "https://github.com/Ouerghi23/chatbot"
+        },
+        "filePath": "chatbot.py",
+        "fileContent": "={{$json.data}}",
+        "commitMessage": "Auto push from n8n agent",
+        "additionalParameters": {
+          "branch": {
+            "branch": "main"
+          },
+          "author": {
+            "name": "Ouerghi",
+            "email": "shaymaouerghi0@gmail.com"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        140,
+        -340
+      ],
+      "id": "1c4cc0a9-d8b5-4d73-90eb-b352e59268f9",
+      "name": "GitHub",
+      "webhookId": "bc05c764-49dd-4861-8853-c8058213828e",
+      "credentials": {
+        "githubApi": {
+          "id": "ulITFSXvB1jmMgfK",
+          "name": "GitHub account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.first().json;\n\nreturn {\n  json: {\n    repo_owner: \"Ouerghi23\",\n    repo_name: \"chatbot\", \n    file_path: \"chatbot.py\",\n    commit_message: \"Auto push from n8n agent\",\n    branch: \"main\",\n    github_token: \"\",\n    data: inputData.data\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -40,
+        -180
+      ],
+      "id": "179c9981-c867-4991-98c4-63de86a9f74c",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "chatId": "6461505079",
+        "text": "✅ Push GitHub réussi ! Fichier chatbot.py mis à jour.",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        -300
+      ],
+      "id": "99e70fd2-64aa-4bfe-8ca4-99e1e5cfb7c4",
+      "name": "Telegram",
+      "webhookId": "062a247b-ab2e-4f33-a920-3cf043667eb0",
+      "credentials": {
+        "telegramApi": {
+          "id": "J6e9rEEwuorC8d89",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "131df72e-d855-4524-a834-c542a7f77cd1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9a96e9af9005b70b31ef50f6b6975f839fc6e5a69944096e4fc8315a831cb61b"
+  },
+  "id": "rb4N2qeBKadwJyku",
+  "tags": []
+}
